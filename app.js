@@ -42,13 +42,22 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
   var message = req.weixin;
   if(message.MsgType == "text"){
-    res.reply("你发送的是文本消息");
+    res.reply({
+      content: '"你发送的是文本消息"',
+      type: 'text'
+    });
   }
   else if(message.MsgType == "image"){
-    res.reply("你发送的是图片消息");
-  }
+    res.reply({
+      content: '"你发送的是图片消息"',
+      type: 'text'
+    });}
+   
   else if(message.MsgType == "voice"){
-    res.reply("你发送的是语言消息");
+     res.reply({
+      content: '"你发送的是语音消息"',
+      type: 'text'
+    });
   }
   
 }));
