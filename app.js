@@ -50,7 +50,18 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   } else if (message.MsgType == "image") {
     res.reply({content: '"你发送的是图片消息"', type: 'text'});
   } else if (message.MsgType == "voice") {
+
+    if(message.Recognition){
+      var _recognition = message.Recognition;
+      if(_recognition.indexOf('你好')){
+        res.reply("你好");
+      }else if(_recognition.indexOf("天气")){
+        res.reply('找不到天气');
+      }
+    }else{
+
     res.reply({content: '"你发送的是语音消息"', type: 'text'});
+    }
   } else if (message.MsgType == 'event') {
 
     if (message.Event === 'subscribe') {
