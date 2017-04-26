@@ -37,12 +37,14 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
   var message = req.weixin;
   if (message.MsgType == "text") {
-    var input = message.Content.trim();
-    if(input ==="网址"){
+    var input = message
+      .Content
+      .trim();
+    if (input === "网址") {
       res.reply({type: "text", content: 'http://baidu.com'});
-    }else if(input === "天气"){
-       res.reply({type: "text", content: '今天晴转阴'});
-    }else{
+    } else if (input === "天气") {
+      res.reply({type: "text", content: '今天晴转阴'});
+    } else {
       res.reply({content: '"你发送的是文本消息"', type: 'text'});
     }
   } else if (message.MsgType == "image") {
@@ -56,30 +58,30 @@ app.use('/wechat', wechat(config, function (req, res, next) {
       res.reply('谢谢添加测试帐号:) ');
     } else if (message.Event === 'unsubscribe') {
       res.reply('Bye!');
-    } else if(message.Event ==='click'){
-      if(message.EventKey ==='V1001_TODAY_MUSIC'){
+    } else if (message.Event === 'click' || message.Event === 'CLICK') {
+
+      if (message.EventKey == 'V1001_TODAY_MUSIC') {
         // res.reply('谢谢点赞~');
         res.reply([
-      {
-        title: '北京欢迎你',
-        description: '描述信息',
-        picurl: 'http://wxtest.heitaov.cn/pic1.jpg',
-        url: 'http://baidu.com'
+          {
+            title: '北京欢迎你',
+            description: '描述信息',
+            picurl: 'http://wxtest.heitaov.cn/pic1.jpg',
+            url: 'http://baidu.com'
+          }, {
+            title: '千里之外',
+            description: '描述信息',
+            picurl: 'http://wxtest.heitaov.cn/pic1.jpg',
+            url: 'http://baidu.com'
+          }
+        ])
+      } else if (message.EventKey === 'V1001_GOOD') {
+        res.reply('谢谢点赞~');
+      } else {
+        res.reply('未知菜单');
       }
-    ,
-      {
-        title: '千里之外',
-        description: '描述信息',
-        picurl: 'http://wxtest.heitaov.cn/pic1.jpg',
-        url: 'http://baidu.com'
-      }
-    ])
-      }else if(message.EventKey  ==='V1001_GOOD'){
-          res.reply('谢谢点赞~');
-      }else{
-         res.reply('未知菜单');
-      }
-    }else{
+    } else {
+      console.log(event);
       res.reply('暂未支持! Coming soon!');
     }
 

@@ -24,6 +24,12 @@ var menu = {
     }
   ]
 };
-api.createMenu(menu, function(err,result){
-  console.log(err,result);
+// api.createMenu(menu, function(err,result){
+//   console.log(err,result);
+// });
+
+api.getMenu( function(err,result){
+  console.log(result);
+  console.log(result.menu.button);
 });
+
